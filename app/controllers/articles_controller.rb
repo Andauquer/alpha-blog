@@ -2,7 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:edit, :update, :show, :destroy]
   
   def index
-    @articles = Article.all
+    #De esta manera especificamos la paginacion en el muestro de articulos
+    @articles = Article.paginate(page: params[:page], per_page: 3)
   end
   
   def new
