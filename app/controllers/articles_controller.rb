@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController
+  
   before_action :set_article, only: [:edit, :update, :show, :destroy]
+  before_action :require_user, except: [:idex, :show]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
   
   def index
     #De esta manera especificamos la paginacion en el muestro de articulos
@@ -51,4 +54,13 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :description)
   end
+  
+  def require_same_user
+    #Tenemos accesos a @article.user porque tenemos un before_action que lo setea con
+    #anticipacion.
+    if current_user != @article.user
+      redirect_to root_path
+    end
+  end
+  
 end
