@@ -58,7 +58,7 @@ class ArticlesController < ApplicationController
   def require_same_user
     #Tenemos accesos a @article.user porque tenemos un before_action que lo setea con
     #anticipacion.
-    if current_user != @article.user
+    if current_user != @article.user and !current_user.admin?
       redirect_to root_path
     end
   end

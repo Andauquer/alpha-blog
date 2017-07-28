@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  has_many :articles
+  #Con el comando dependant: :destroy, si el usuario es eliminado, todos sus articulos
+  #lo seran tambien.
+  has_many :articles, dependent: :destroy
   #Antes de guardar, convierte el email a solo minusculas.
   before_save { self.email = email.downcase }
   #uniqueness, en conjunto con la validacion entre llaves, verifica que no exista otro nombre repetido
