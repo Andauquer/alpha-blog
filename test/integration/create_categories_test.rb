@@ -3,7 +3,12 @@ require 'test_helper'
 
 class CreateCategoriesTest < ActionDispatch::IntegrationTest
   
+  def setup
+    @user = User.create(username: "john", email: "john@example.com", password: "password", admin: true)
+  end
+  
   test "get new category form and create category" do
+    sign_in_as(@user, "password")
     #Debemos emular por completo las acciones del usuario, siendo la primera el llamado
     #get de crear una nueva categoria.
     get new_category_path 
@@ -21,27 +26,9 @@ class CreateCategoriesTest < ActionDispatch::IntegrationTest
     #Maraca acierto si se encuentra la palabra sports en la pagina de index.
     assert_match "sports", response.body
   end
-  
-  test "get new category form and create category" do
-    #Debemos emular por completo las acciones del usuario, siendo la primera el llamado
-    #get de crear una nueva categoria.
-    get new_category_path 
-    #Marca acierto si puede obtener esta ruta.
-    assert_template 'categories/new'
-    #Marca acierto si despues de la accion ejecutada en el do, hay una diferencia de 1
-    #registro mas en la BD de categorias, es decir, se guardo la nueva categoria.
-    assert_difference 'Category.count', 1 do
-      #Marca acierto si se logra enviar via post, la nueva categoria. Es decir, si la accion
-      #create, se ejecuta exitosamente.
-      post_via_redirect categories_path, category: {name: "sports"}
-    end
-    #Marca acierto si se logra mostrar la pagina index, de categorias.
-    assert_template 'categories/index'
-    #Maraca acierto si se encuentra la palabra sports en la pagina de index.
-    assert_match "sports", response.body
-  end
-  
+
   test "invalid category submission results in failure" do
+    sign_in_as(@user, "password")
     get new_category_path 
     assert_template 'categories/new'
     #Para este caso, se marca acierto si no hay cambios en la tabla categorias.
