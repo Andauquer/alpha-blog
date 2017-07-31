@@ -72,6 +72,22 @@ $navbar-default-bg: #3B3066;
   padding-left: 0;
 }
 
+.badge {
+  background-color: #3B3066;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+.badge a {
+  color: #ffffff;
+}
+
+/* Este sirve para que la muestra de los check box al crea un nuevo articulo no se distorsione en ciertas resoluciones*/
+.input_checkbox input {
+  width: auto !important;
+}
+
 .footer {
   margin-top: 30px;
   padding-top: 5px;

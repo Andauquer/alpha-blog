@@ -21,6 +21,10 @@
   <% end %>
   <!--simple_format dejara el texto que imprimira con el mismo formato con el que se creo-->
   <%= simple_format(@article.description) %>
+  <% if @article.categories.any? %>
+    <!--@article.categories es una manera rapida de hacer un each do, pero, necesita el parcial _category.htm.erb para que funcione -->
+    <p><%= render @article.categories %></p>
+  <% end %>
   <div class="article-actions center">
     <% if logged_in? && (current_user == @article.user || current_user.admin?) %>
       <%= link_to 'Edit this article', edit_article_path(@article), class: "btn btn-xs btn-primary" %>
